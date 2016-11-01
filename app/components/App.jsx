@@ -2,23 +2,39 @@ import React from 'react';
 import uuid from 'uuid';
 import Notes from './Notes';
 
-const notes = [
-  {
-    id: uuid.v4(),
-    task: 'Learn React',
-  },
-  {
-    id: uuid.v4(),
-    task: 'Do laundry',
-  },
-];
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-export default function App() {
-  return (
-    <div>
-      <button onClick={() => console.log('add note')}>Add</button>
+    this.state = {
+      notes: [
+        {
+          id: uuid.v4(),
+          task: 'Learn React',
+        },
+        {
+          id: uuid.v4(),
+          task: 'Do laundry',
+        },
+      ],
+    };
+  }
+  render() {
+    const { notes } = this.state;
 
-      <Notes notes={notes} />
-    </div>
-  );
+    return (
+      <div>
+        <button onClick={this.addNote}>Add</button>
+        <Notes notes={notes} />
+      </div>
+    );
+  }
+  addNote = () => {
+    this.setState({
+      notes: [...this.state.notes, {
+        id: uuid.v4(),
+        task: 'New task',
+      }],
+    });
+  };
 }
