@@ -41,7 +41,7 @@ module.exports = {
     "array-bracket-spacing": ["error", "never"],
     "brace-style": ["error", "1tbs"],
     "camelcase": ["error"],
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": ["error", "only-multiline"],
     "comma-style": ["error", "last"],
     "eol-last": ["error"],
     "func-style": ["error", "expression", {"allowArrowFunctions": true}],

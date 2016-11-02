@@ -19,16 +19,18 @@ export default class App extends React.Component {
       ],
     };
   }
+
   render() {
     const { notes } = this.state;
 
     return (
       <div>
         <button onClick={this.addNote}>Add</button>
-        <Notes notes={notes} />
+        <Notes notes={notes} onDelete={this.deleteNote} />
       </div>
     );
   }
+
   addNote = () => {
     this.setState({
       notes: [...this.state.notes, {
@@ -36,5 +38,13 @@ export default class App extends React.Component {
         task: 'New task',
       }],
     });
-  };
+  }
+
+  deleteNote = (id, event) => {
+    event.stopPropagation();
+
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== id)
+    });
+  }
 }
