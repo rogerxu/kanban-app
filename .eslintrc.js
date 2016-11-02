@@ -77,7 +77,7 @@ module.exports = {
     "padded-blocks": ["error", "never"],
     "quote-props": ["error", "as-needed"],
     "quotes": ["error", "single"],
-    "semi": ["warn", "always"],
+    "semi": ["error", "always"],
     "space-before-blocks": ["error"],
     "space-before-function-paren": ["error", {
       "anonymous": "always",

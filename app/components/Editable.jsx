@@ -1,12 +1,14 @@
 import React from 'react';
 
-export default function Editable({ editing, value, onEdit, ...props }) {
+const Editable = ({ editing, value, onEdit }) => {
   if (editing) {
-    return <Edit value={value} onEdit={onEdit} {...props} />;
+    return <Editable.Edit value={value} onEdit={onEdit} />;
   }
 
-  return <span {...props}>{value}</span>;
-}
+  return <Editable.Value value={value} />;
+};
+
+Editable.Value = ({ value, ...props }) => <span {...props}>{value}</span>;
 
 class Edit extends React.Component {
   render() {
@@ -25,7 +27,7 @@ class Edit extends React.Component {
     if (event.key === 'Enter') {
       this.finishEdit(event);
     }
-  } 
+  }
 
   finishEdit = (event) => {
     const value = event.target.value;
@@ -35,3 +37,7 @@ class Edit extends React.Component {
     }
   }
 }
+
+Editable.Edit = Edit;
+
+export default Editable;
