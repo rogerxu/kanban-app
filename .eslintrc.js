@@ -28,7 +28,7 @@ module.exports = {
     "no-iterator": ["error"],
     "no-loop-func": ["error"],
     "no-new-func": ["error"],
-    "no-param-reassign": ["error", {"props": true}],
+    "no-param-reassign": ["error", {"props": false}],
     "no-useless-escape": ["error"],
     "radix": ["error"],
     "wrap-iife": ["error"],

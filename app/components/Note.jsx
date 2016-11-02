@@ -1,10 +1,9 @@
 import React from 'react';
 
-export default function Note({ task, onDelete }) {
+export default function Note({ children, ...props }) {
   return (
-    <div>
-      <span>{task}</span>
-      <button onClick={onDelete}>Delete</button>
+    <div {...props}>
+      {children}
     </div>
   );
 }
