@@ -14,6 +14,22 @@ export default class LaneStore {
       lanes: this.lanes.concat(lane)
     });
   }
+  update(updatedLane) {
+    this.setState({
+      lanes: this.lanes.map((lane) => {
+        if (lane.id === updatedLane.id) {
+          return Object.assign({}, lane, updatedLane);
+        }
+
+        return lane;
+      })
+    });
+  }
+  delete(id) {
+    this.setState({
+      lanes: this.lanes.filter(lane => lane.id !== id)
+    });
+  }
   attachToLane({ laneId, noteId }) {
     this.setState({
       lanes: this.lanes.map((lane) => {
@@ -38,22 +54,6 @@ export default class LaneStore {
 
         return lane;
       })
-    });
-  }
-  update(updatedNote) {
-    this.setState({
-      notes: this.notes.map((note) => {
-        if (note.id === updatedNote.id) {
-          return Object.assign({}, note, updatedNote);
-        }
-
-        return note;
-      })
-    });
-  }
-  delete(id) {
-    this.setState({
-      notes: this.notes.filter(note => note.id !== id)
     });
   }
 }
