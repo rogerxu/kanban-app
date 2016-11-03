@@ -12,7 +12,7 @@ class LaneHeader extends React.Component {
     return (
       <div className="lane-header" onClick={this.activateLaneEdit}>
         <div className="lane-add-note">
-          <button className="add-note" onClick={this.addNote}>Add</button>
+          <button onClick={this.addNote}>+</button>
         </div>
         <Editable className="lane-name"
           editing={lane.editing}
