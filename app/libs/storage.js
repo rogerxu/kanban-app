@@ -2,7 +2,7 @@ export default storage => ({
   get(key) {
     try {
       return JSON.parse(storage.getItem(key));
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   },

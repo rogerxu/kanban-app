@@ -1,8 +1,8 @@
 export default (alt, storage, storageName) => {
   try {
     alt.bootstrap(storage.get(storageName));
-  } catch (e) {
-    console.error('Failed to bootstrap data', e);
+  } catch (err) {
+    console.error('Failed to bootstrap data', err);
   }
 
   alt.FinalStore.listen(() => {
