@@ -15,7 +15,7 @@ export default class LaneStore {
       lanes: this.lanes.concat(lane)
     });
   }
-  
+
   update(updatedLane) {
     this.setState({
       lanes: this.lanes.map((lane) => {
@@ -27,37 +27,11 @@ export default class LaneStore {
       })
     });
   }
-  
+
   delete(id) {
     this.setState({
       lanes: this.lanes.filter(lane => lane.id !== id)
     });
-  }
-  
-  move({ sourceId, targetId }) {
-    const lanes = this.lanes;
-    const sourceLane = lanes.filter(lane => lane.notes.includes(sourceId))[0];
-    const targetLane = lanes.filter(lane => lane.notes.includes(targetId))[0];
-    const sourceNoteIndex = sourceLane.notes.indexOf(sourceId);
-    const targetNoteIndex = targetLane.notes.indexOf(targetId);
-
-    // same lane
-    if (sourceLane === targetLane) {
-      sourceLane.notes = update(sourceLane.notes, {
-        $splice: [
-          [sourceNoteIndex, 1],
-          [targetNoteIndex, 0, sourceId]
-        ]
-      });
-    } else {
-      // different lanes
-      sourceLane.notes.splice(sourceNoteIndex, 1);
-
-      // move to target
-      targetLane.notes.splice(targetNoteIndex, 0, sourceId);
-    }
-
-    this.setState({ lanes });
   }
 
   attachToLane({ laneId, noteId }) {
@@ -86,5 +60,31 @@ export default class LaneStore {
         return lane;
       })
     });
+  }
+
+  move({ sourceId, targetId }) {
+    const lanes = this.lanes;
+    const sourceLane = lanes.filter(lane => lane.notes.includes(sourceId))[0];
+    const targetLane = lanes.filter(lane => lane.notes.includes(targetId))[0];
+    const sourceNoteIndex = sourceLane.notes.indexOf(sourceId);
+    const targetNoteIndex = targetLane.notes.indexOf(targetId);
+
+    // same lane
+    if (sourceLane === targetLane) {
+      sourceLane.notes = update(sourceLane.notes, {
+        $splice: [
+          [sourceNoteIndex, 1],
+          [targetNoteIndex, 0, sourceId]
+        ]
+      });
+    } else {
+      // different lanes
+      sourceLane.notes.splice(sourceNoteIndex, 1);
+
+      // move to target
+      targetLane.notes.splice(targetNoteIndex, 0, sourceId);
+    }
+
+    this.setState({ lanes });
   }
 }

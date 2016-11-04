@@ -71,6 +71,7 @@ body {
 .notes {
   margin: 0.5em;
   padding-left: 0;
+
   max-width: 15em;
   list-style: none;
 }
@@ -92,6 +93,7 @@ body {
 }
 
 .note .value {
+  /* force to use inline-block so that it gets minimum height */
   display: inline-block;
 }
 

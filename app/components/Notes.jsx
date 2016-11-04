@@ -23,7 +23,7 @@ export default function Notes({
             onEdit={onEdit.bind(null, id)} />
           <button
             className="delete"
-            onClick={onDelete.bind(null, id)}>X</button>
+            onClick={onDelete.bind(null, id)}>x</button>
         </Note>
       </li>
     )}</ul>
