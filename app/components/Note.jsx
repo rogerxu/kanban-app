@@ -5,34 +5,43 @@ import ItemTypes from '../constants/itemTypes';
 
 const Note = ({
   connectDragSource, connectDropTarget,
-  children, ...props
+  isDragging, isOver, onMove,
+  id, children, ...props
 }) => compose(connectDragSource, connectDropTarget)(
-  <div {...props}>
+  <div style={{
+    opacity: isDragging || isOver ? 0 : 1
+  }} {...props}>
     {children}
   </div>
 );
 
 const noteSource = {
   beginDrag(props) {
-    console.log('begin dragging note', props);
-
-    return {};
+    return {
+      id: props.id
+    };
   }
 };
 
 const noteTarget = {
   hover(targetProps, monitor) {
+    const targetId = targetProps.id;
     const sourceProps = monitor.getItem();
+    const sourceId = sourceProps.id;
 
-    console.log('dragging note', sourceProps, targetProps);
+    if (sourceId !== targetId) {
+      targetProps.onMove({ sourceId, targetId });
+    }
   }
 };
 
 export default compose(
-  DragSource(ItemTypes.NOTE, noteSource, connect => ({
-    connectDragSource: connect.dragSource()
+  DragSource(ItemTypes.NOTE, noteSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
   })),
-  DropTarget(ItemTypes.NOTE, noteTarget, connect => ({
-    connectDropTarget: connect.dropTarget()
+  DropTarget(ItemTypes.NOTE, noteTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
   }))
 )(Note);
