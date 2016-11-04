@@ -3,16 +3,15 @@ import { compose } from 'redux';
 import { DropTarget } from 'react-dnd';
 import ItemTypes from '../constants/itemTypes';
 import connect from '../libs/connect';
-import LaneHeader from './LaneHeader';
-import Notes from './Notes';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
+import Notes from './Notes';
+import LaneHeader from './LaneHeader';
 
-const selectNotesByIds = (allNotes, noteIds = []) => {
-  return allNotes.filter((note) => {
-    return noteIds.includes(note.id);
-  });
-};
+const selectNotesByIds = (allNotes, noteIds = []) =>
+  noteIds.map(noteId =>
+    allNotes.find(note => note.id === noteId)
+);
 
 class Lane extends React.Component {
   render() {
