@@ -6,14 +6,19 @@ import ItemTypes from '../constants/itemTypes';
 const Note = ({
   connectDragSource, connectDropTarget,
   isDragging, isOver, onMove,
-  id, children, ...props
-}) => compose(connectDragSource, connectDropTarget)(
-  <div style={{
-    opacity: isDragging || isOver ? 0 : 1
-  }} {...props}>
-    {children}
-  </div>
-);
+  id, editing, children, ...props
+}) => {
+  // pass through if we are editing
+  const dragSource = editing ? val => val : connectDragSource;
+
+  return compose(dragSource, connectDropTarget)(
+    <div style={{
+      opacity: isDragging || isOver ? 0 : 1
+    }} {...props}>
+      {children}
+    </div>
+  );
+};
 
 const noteSource = {
   beginDrag(props) {
