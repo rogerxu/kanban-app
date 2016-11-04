@@ -1,4 +1,7 @@
 import React from 'react';
+import { compose } from 'redux';
+import { DropTarget } from 'react-dnd';
+import ItemTypes from '../constants/itemTypes';
 import connect from '../libs/connect';
 import LaneHeader from './LaneHeader';
 import Notes from './Notes';
@@ -13,9 +16,10 @@ const selectNotesByIds = (allNotes, noteIds = []) => {
 
 class Lane extends React.Component {
   render() {
-    const { lane, notes, LaneActions, NoteActions, ...props } = this.props;
+    const { connectDropTarget, lane, notes,
+      LaneActions, NoteActions, ...props } = this.props;
 
-    return (
+    return connectDropTarget(
       <div {...props}>
         <LaneHeader lane={lane} />
         <Notes
@@ -53,8 +57,31 @@ class Lane extends React.Component {
   }
 }
 
-// connect(state, actions)
-export default connect(
-  ({ notes }) => ({ notes }),
-  { NoteActions, LaneActions }
+const noteTarget = {
+  hover(targetProps, monitor) {
+    const sourceProps = monitor.getItem();
+    const sourceId = sourceProps.id;
+    const targetLane = targetProps.lane;
+
+    // empty target lane
+    if (!targetLane.notes.length) {
+      // attach note to target lane
+      LaneActions.attachToLane({
+        laneId: targetLane.id,
+        noteId: sourceId
+      });
+    }
+  }
+};
+
+export default compose(
+  DropTarget(ItemTypes.NOTE, noteTarget, connect => ({
+    connectDropTarget: connect.dropTarget()
+  })),
+
+  // connect(state, actions)
+  connect(
+    ({ notes }) => ({ notes }),
+    { NoteActions, LaneActions }
+  )
 )(Lane);
